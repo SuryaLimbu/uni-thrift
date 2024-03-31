@@ -50,7 +50,7 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <p className="font-bold text-inherit">The Grind Swap</p>
+              <Link className="font-bold text-inherit" href="/">UniExchangeMarket</Link>
             </div>
             <div>
               <Input

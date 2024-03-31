@@ -15,16 +15,15 @@ export default function HeroSection() {
         <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
           <div className="mx-auto max-w-xl text-center z-40">
             <h1 className="text-3xl font-extrabold sm:text-4xl">
-              Student Bargain Bonanza:
+            Upgrade Your Uni Life
               <strong className="font-extrabold text-red-700 sm:block">
                 {" "}
-                Buy, Sell, and Swap Second-Hand Goodies Today!{" "}
+                Sell Your Second-Hand Stuff to Your Classmates!{" "}
               </strong>
             </h1>
 
             <p className="mt-4 sm:text-xl/relaxed">
-              Clean up your clutter, make some money, and find great deals on
-              campus essentials!
+            Turn your old textbooks and gadgets into cash while helping fellow students save!
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
