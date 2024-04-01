@@ -69,7 +69,7 @@ const NavbarUI = () => {
             </div>
 
             <div className="hidden lg:flex gap-6 justify-end">
-              <Link href="#">Login</Link>
+              <Link href="/auth">Login</Link>
               <Button as={Link} color="primary" href="#" variant="flat">
                 Sign Up
               </Button>
