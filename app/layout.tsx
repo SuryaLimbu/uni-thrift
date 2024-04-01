@@ -6,7 +6,6 @@ import Providers from "./providers";
 import NavbarUI from "./components/navbar/navbar";
 
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,7 +23,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <NavbarUI />
-          <main className="bg-white">{children}</main>
+          <main className="bg-white mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+            {children}
+          </main>
+          {/* <Footer /> */}
         </Providers>
       </body>
     </html>

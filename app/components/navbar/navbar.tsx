@@ -70,7 +70,7 @@ const NavbarUI = () => {
 
             <div className="hidden lg:flex gap-6 justify-end">
               <Link href="/auth">Login</Link>
-              <Button as={Link} color="primary" href="#" variant="flat">
+              <Button as={Link} color="primary" href="auth" variant="flat">
                 Sign Up
               </Button>
               <Dropdown placement="bottom-end">

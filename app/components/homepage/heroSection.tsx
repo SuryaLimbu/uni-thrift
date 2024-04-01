@@ -3,7 +3,7 @@ import hero from "../../assets/hero/heroOne.png";
 export default function HeroSection() {
   return (
     <>
-      <section className=" grid grid-cols-2 items-center px-3">
+      <section className=" grid grid-cols-2 items-center px-3 my-10">
         <div>
           <img
             src={(hero as HTMLImageElement).src}
@@ -12,7 +12,7 @@ export default function HeroSection() {
           />
         </div>
 
-        <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
+        <div className="">
           <div className="mx-auto max-w-xl text-center z-40">
             <h1 className="text-3xl font-extrabold sm:text-4xl">
             Upgrade Your Uni Life

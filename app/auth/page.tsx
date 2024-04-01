@@ -1,13 +1,22 @@
-"use client"
+"use client";
 import React from "react";
 
-import {Tabs, Tab, Input, Link, Button, Card, CardBody, CardHeader} from "@nextui-org/react";
+import {
+  Tabs,
+  Tab,
+  Input,
+  Link,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+} from "@nextui-org/react";
 
 export default function App() {
   const [selected, setSelected] = React.useState<string | number>("login");
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full justify-between items-center">
       <Card className="max-w-full w-[340px] h-[400px]">
         <CardBody className="overflow-hidden">
           <Tabs
@@ -19,7 +28,12 @@ export default function App() {
           >
             <Tab key="login" title="Login">
               <form className="flex flex-col gap-4">
-                <Input isRequired label="Email" placeholder="Enter your email" type="email" />
+                <Input
+                  isRequired
+                  label="Email"
+                  placeholder="Enter your email"
+                  type="email"
+                />
                 <Input
                   isRequired
                   label="Password"
@@ -41,8 +55,18 @@ export default function App() {
             </Tab>
             <Tab key="sign-up" title="Sign up">
               <form className="flex flex-col gap-4 h-[300px]">
-                <Input isRequired label="Name" placeholder="Enter your name" type="password" />
-                <Input isRequired label="Email" placeholder="Enter your email" type="email" />
+                <Input
+                  isRequired
+                  label="Name"
+                  placeholder="Enter your name"
+                  type="password"
+                />
+                <Input
+                  isRequired
+                  label="Email"
+                  placeholder="Enter your email"
+                  type="email"
+                />
                 <Input
                   isRequired
                   label="Password"
@@ -68,3 +92,4 @@ export default function App() {
     </div>
   );
 }
+

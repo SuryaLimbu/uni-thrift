@@ -1,5 +1,10 @@
-// next.config.js
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-    distDir: 'build'
-  };
+  distDir: "build",
+  reactStrictMode: true,
+  images: {
+    domains: ["images.unsplash.com"],
+  },
+};
+
 export default nextConfig;

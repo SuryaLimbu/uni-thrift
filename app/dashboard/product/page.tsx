@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -12,19 +12,42 @@ import {
   Link,
   Textarea,
   Select,
-  SelectItem
+  SelectItem,
 } from "@nextui-org/react";
 import { useDisclosure } from "@nextui-org/react";
+import ProductTable from "./table";
+import { PiPlus } from "react-icons/pi";
+
 export default function Page() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+  });
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log(formData);
+  }
+
   return (
     <>
-      <div>
-        <div>
-          
+      <div className="flex flex-col gap-4">
+        <div className=" ">
           <Button onPress={onOpen} color="primary">
-            Add New Product
+            Add New Product <PiPlus />
           </Button>
           <Modal
             isOpen={isOpen}
@@ -38,51 +61,76 @@ export default function Page() {
                     Add Product Info
                   </ModalHeader>
                   <ModalBody>
-                    <Input
-                      autoFocus
-                      label="Product Title"
-                      placeholder="Enter your Product Title"
-                      variant="bordered"
-                    />
-                   <Textarea
-                   label="Product Description"
-                   placeholder="Enter your Product Description"
-                   variant="bordered"
-                   className="max-w-full"
-                   />
-                    <div className="flex py-2 px-1 justify-between gap-2">
+                    <form onSubmit={onSubmit}>
                       <Input
-                      label="Price"
-                      placeholder="Enter your Price"
-                      variant="bordered"
+                        autoFocus
+                        label="Product Title"
+                        placeholder="Enter your Product Title"
+                        variant="bordered"
+                        value={formData.title}
+                        onChange={handleInputChange}
+                        name="title"
                       />
-                      <Select
-                    label="Category"
-                    placeholder="Select your Category"
-                    variant="bordered"
-                    className="max-w-full"
-                    >
-                    <SelectItem value="1" key={""}>Category 1</SelectItem>
-                    <SelectItem value="2" key={""}>Category 2</SelectItem>
-                    <SelectItem value="3" key={""}>Category 3</SelectItem>
-                    </Select>
-                      
-                    </div>
+                      <Textarea
+                        label="Product Description"
+                        placeholder="Enter your Product Description"
+                        variant="bordered"
+                        className="max-w-full"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        name="description"
+                      />
+                      <div className="flex py-2 px-1 justify-between gap-2">
+                        <Input
+                          label="Price"
+                          placeholder="Enter your Price"
+                          variant="bordered"
+                          value={formData.price}
+                          onChange={handleInputChange}
+                          name="price"
+                        />
+                        <Select
+                          label="Category"
+                          placeholder="Select your Category"
+                          variant="bordered"
+                          className="max-w-full"
+                          value={formData.category}
+                          onChange={(event) =>
+                            setFormData({
+                              ...formData,
+                              category: event.target.value,
+                            })
+                          }
+                          name="category"
+                        >
+                          <SelectItem value="1" key={""}>
+                            Category 1
+                          </SelectItem>
+                          <SelectItem value="2" key={""}>
+                            Category 2
+                          </SelectItem>
+                          <SelectItem value="3" key={""}>
+                            Category 3
+                          </SelectItem>
+                        </Select>
+                      </div>
+                      <Button color="danger" variant="flat" onPress={onClose}>
+                        Close
+                      </Button>
+                      <Button color="primary" type="submit">
+                        Save All Product Info
+                      </Button>
+                    </form>
                   </ModalBody>
-                  <ModalFooter>
-                    <Button color="danger" variant="flat" onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button color="primary" onPress={onClose}>
-                      Save All Product Info
-                    </Button>
-                  </ModalFooter>
+                  {/* <ModalFooter></ModalFooter> */}
                 </>
               )}
             </ModalContent>
           </Modal>
         </div>
-        <div></div>
+        <div>
+          <ProductTable />
+        </div>
       </div>
     </>
   );
