@@ -18,12 +18,15 @@ import {
   DropdownTrigger,
   DropdownMenu,
   Avatar,
+  Switch,
 } from "@nextui-org/react";
-import { PiMagnifyingGlass } from "react-icons/pi";
+import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
+import { useTheme } from "next-themes";
 
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
 const NavbarUI = () => {
+  const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const menuItems = [
@@ -50,7 +53,9 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-inherit" href="/">UniExchangeMarket</Link>
+              <Link className="font-bold text-inherit" href="/">
+                UniExchangeMarket
+              </Link>
             </div>
             <div>
               <Input
@@ -69,6 +74,20 @@ const NavbarUI = () => {
             </div>
 
             <div className="hidden lg:flex gap-6 justify-end">
+              <Switch
+                defaultSelected
+                size="lg"
+                color="secondary"
+                thumbIcon={({ isSelected, className }) =>
+                  isSelected ? (
+                    <PiSun className={className} onClick={() => setTheme("light")} />
+                  ) : (
+                    <PiMoon className={className} onClick={() => setTheme("dark")}/>
+                  )
+                }
+              >
+              </Switch>
+
               <Link href="/auth">Login</Link>
               <Button as={Link} color="primary" href="auth" variant="flat">
                 Sign Up
@@ -91,7 +110,9 @@ const NavbarUI = () => {
                     <p className="font-semibold">zoey@example.com</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
-                  <DropdownItem key="team_settings"><Link href="/dashboard">Dashboard</Link></DropdownItem>
+                  <DropdownItem key="team_settings">
+                    <Link href="/dashboard">Dashboard</Link>
+                  </DropdownItem>
                   <DropdownItem key="analytics">Analytics</DropdownItem>
                   <DropdownItem key="system">System</DropdownItem>
                   <DropdownItem key="configurations">

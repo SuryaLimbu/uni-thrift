@@ -3,7 +3,7 @@ import React from "react";
 export default function Sidebar() {
   return (
     <>
-      <div className="flex h-screen flex-col justify-between border-e bg-white">
+      <div className="flex h-screen flex-col justify-between border-e">
         <div className="px-4">
           <ul className="mt-6 space-y-1">
             <li>
