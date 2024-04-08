@@ -19,6 +19,7 @@ import {
   DropdownMenu,
   Avatar,
   Switch,
+  Divider,
 } from "@nextui-org/react";
 import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
 import { useTheme } from "next-themes";
@@ -149,7 +150,7 @@ const NavbarUI = () => {
               </NavbarMenuItem>
             ))}
           </NavbarMenu>
-          <hr className="hidden sm:flex" />
+          <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
             <NavbarItem>
               <Link color="foreground" href="#">
