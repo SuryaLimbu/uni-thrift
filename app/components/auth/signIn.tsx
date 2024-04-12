@@ -1,7 +1,8 @@
-"use client";
+// "use client";
 import React, { useState } from "react";
 import { Button, Input, Link } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import { deleteCookie, setCookie } from "cookies-next";
 
 interface SignInProps {
   setSelected: React.Dispatch<React.SetStateAction<string | number>>;
@@ -9,6 +10,7 @@ interface SignInProps {
 
 const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -43,6 +45,7 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
       lowercase: "",
       number: "",
     };
+
     if (!password.trim()) {
       newErrors.required = "Password is required";
     } else {
@@ -95,11 +98,14 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
           const data = await response.json();
           // console.log(data);
 
-          // Store user data in localStorage
-          localStorage.setItem("accessToken", data.accessToken);
-          localStorage.setItem("userId", data.userId);
+          //store user data in cookies
+       
+
+          setCookie("accessToken", data.accessToken);
+          setCookie("userId", data.userId);
           // Redirect user or update application state
-          router.push("/");
+          router.push("/site");
+
           console.log("Login successful");
         } else {
           // Handle login failure, display error message

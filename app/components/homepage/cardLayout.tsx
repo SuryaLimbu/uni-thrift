@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../card";
+import fetchApiData from "@/app/lib/fetchData";
 
 interface ProductInterface {
   title: string;
@@ -9,22 +10,16 @@ interface ProductInterface {
 
 export default function CardLayout() {
   const [products, setProduct] = useState<ProductInterface[]>([]);
-  // const username = localStorage.getItem("userId");
-  const accessToken = localStorage.getItem("accessToken");
+  
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}product`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
       // console.log(response);
-      const data = await response.json();
+      const data = fetchApiData("product");
       console.log(data);
-      setProduct(data);
+      setProduct(await data);
     };
     fetchData();
   }, []);
-
-
 
   // console.log("list of products", products);
 
