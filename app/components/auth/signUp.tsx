@@ -1,32 +1,39 @@
 import { useState } from "react";
 import { Button, Input, Link } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 interface SignUpProps {
   setSelected: React.Dispatch<React.SetStateAction<string | number>>;
 }
 
 const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
+
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    studentId: "",
+    rollNo: "",
+    school:"",
+    phone: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    studentId: "",
+    rollNo: "",
+    school:"",
+    phone:"",
     password: {
       required: "",
       length: "",
       uppercase: "",
       lowercase: "",
-      number: ""
+      number: "",
     },
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const validatePassword = (password: string) => {
@@ -35,7 +42,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
       length: "",
       uppercase: "",
       lowercase: "",
-      number: ""
+      number: "",
     };
     if (!password.trim()) {
       newErrors.required = "Password is required";
@@ -44,10 +51,12 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         newErrors.length = "Password must be at least 8 characters long";
       }
       if (!/[A-Z]/.test(password)) {
-        newErrors.uppercase = "Password must contain at least one uppercase letter";
+        newErrors.uppercase =
+          "Password must contain at least one uppercase letter";
       }
       if (!/[a-z]/.test(password)) {
-        newErrors.lowercase = "Password must contain at least one lowercase letter";
+        newErrors.lowercase =
+          "Password must contain at least one lowercase letter";
       }
       if (!/\d/.test(password)) {
         newErrors.number = "Password must contain at least one number";
@@ -55,7 +64,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
     }
     setErrors((prevErrors) => ({
       ...prevErrors,
-      password: newErrors
+      password: newErrors,
     }));
   };
 
@@ -63,7 +72,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
 
     if (name === "password") {
@@ -75,12 +84,12 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
       if (formData.password !== value) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          confirmPassword: "Passwords do not match"
+          confirmPassword: "Passwords do not match",
         }));
       } else {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          confirmPassword: ""
+          confirmPassword: "",
         }));
       }
     }
@@ -91,12 +100,12 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
       if (!emailRegex.test(value)) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          email: "Invalid email format"
+          email: "Invalid email format",
         }));
       } else {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          email: ""
+          email: "",
         }));
       }
     }
@@ -106,13 +115,38 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
     e.preventDefault();
     console.log(formData);
 
-    // Additional form validation can be performed here
-
+    const api = process.env.NEXT_PUBLIC_AUTH_API + "register";
+    console.log(api);
     try {
-      // Perform form submission
+      const response = await fetch(api, {
+        
+        method: "POST",
+        
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+
+        //store user data in cookies
+
+        // Redirect user or update application state
+
+        router.push("/");
+
+        console.log("register successful");
+      } else {
+        // Handle login failure, display error message
+        console.error("register failed");
+      }
     } catch (error) {
-      // Handle form submission error
+      console.error("An error occurred:", error);
     }
+    
   };
 
   return (
@@ -150,8 +184,26 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         label="Student ID"
         placeholder="Enter your student ID"
         type="text"
-        name="studentId"
+        name="rollNo"
         value={formData.studentId}
+        onChange={handleChange}
+      />
+          <Input
+        isRequired
+        label="University Name"
+        placeholder="Enter your university name"
+        type="text"
+        name="school"
+        value={formData.school}
+        onChange={handleChange}
+      />
+          <Input
+        isRequired
+        label="Phone Number"
+        placeholder="Enter your phone number"
+        type="text"
+        name="phone"
+        value={formData.phone}
         onChange={handleChange}
       />
       <Input
@@ -163,9 +215,14 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         value={formData.password}
         onChange={handleChange}
       />
-      {Object.values(errors.password).map((error, index) => (
-        error && <p key={index} className="text-red-500">{error}</p>
-      ))}
+      {Object.values(errors.password).map(
+        (error, index) =>
+          error && (
+            <p key={index} className="text-red-500">
+              {error}
+            </p>
+          )
+      )}
       <Input
         isRequired
         label="Confirm Password"
@@ -175,7 +232,9 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         value={formData.confirmPassword}
         onChange={handleChange}
       />
-      {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword}</p>}
+      {errors.confirmPassword && (
+        <p className="text-red-500">{errors.confirmPassword}</p>
+      )}
       <p className="text-center text-small">
         Already have an account?{" "}
         <Link size="sm" onPress={() => setSelected("login")}>
