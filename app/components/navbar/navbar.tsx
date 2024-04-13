@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-
+import { deleteCookie } from "cookies-next";
 import {
   Navbar,
   NavbarBrand,
@@ -23,10 +23,12 @@ import {
 } from "@nextui-org/react";
 import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
 const NavbarUI = () => {
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -42,6 +44,12 @@ const NavbarUI = () => {
     "Help & Feedback",
     "Log Out",
   ];
+
+  const logout = () => {
+    deleteCookie("accessToken");
+    deleteCookie("userId");
+    router.push("/");
+  };
 
   return (
     <>
@@ -81,18 +89,19 @@ const NavbarUI = () => {
                 color="secondary"
                 thumbIcon={({ isSelected, className }) =>
                   isSelected ? (
-                    <PiSun className={className} onClick={() => setTheme("light")} />
+                    <PiSun
+                      className={className}
+                      onClick={() => setTheme("light")}
+                    />
                   ) : (
-                    <PiMoon className={className} onClick={() => setTheme("dark")}/>
+                    <PiMoon
+                      className={className}
+                      onClick={() => setTheme("dark")}
+                    />
                   )
                 }
-              >
-              </Switch>
+              ></Switch>
 
-              <Link href="/auth">Login</Link>
-              <Button as={Link} color="primary" href="auth" variant="flat">
-                Sign Up
-              </Button>
               <Dropdown placement="bottom-end">
                 <DropdownTrigger>
                   <Avatar
@@ -122,7 +131,7 @@ const NavbarUI = () => {
                   <DropdownItem key="help_and_feedback">
                     Help & Feedback
                   </DropdownItem>
-                  <DropdownItem key="logout" color="danger">
+                  <DropdownItem key="logout" color="danger" onClick={logout}>
                     Log Out
                   </DropdownItem>
                 </DropdownMenu>
