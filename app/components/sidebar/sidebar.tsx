@@ -5,18 +5,10 @@ export default function Sidebar() {
     <>
       <div className="flex sm:h-screen flex-col  justify-between sm:border-e">
         <div className="px-4">
-          <ul className="mt-6 space-y-1 flex sm:flex-col items-center sm:items-stretch gap-4">
+          <ul className="mt-6 space-y-1">
             <li>
               <a
-                href="/site/dashboard"
-                className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
-              >
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a
-                href="/site/product"
+                href="/site/dashboard/product"
                 className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
               >
                 Products
