@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../card";
-import fetchApiData from "@/app/lib/fetchData";
+// import fetchApiData from "@/app/lib/fetchData";
+import { fetchApiData } from "@/app/lib/fetchData";
 
 interface ProductInterface {
   id:number;
