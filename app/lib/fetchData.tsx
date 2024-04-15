@@ -1,12 +1,36 @@
-import { getCookie } from 'cookies-next';
-import React from 'react'
+import { getCookie } from "cookies-next";
+import React from "react";
+const userId = getCookie("userId");
 
-export default async function fetchApiData(product: any) {
+const accessToken = getCookie("accessToken");
+export async function fetchApiData(url: any) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return await response.json();
+}
 
-   const accessToken = getCookie("accessToken");
+export async function fetchOwnData(url: any) {
+  const allData = await fetchApiData(url);
+  console.log("all data:", allData)
+  const ownData = [];
+  for (let i = 0; i < allData.length; i++) {
+    if (allData[i].userId === userId) {
+      ownData.push(allData[i]);
+    }
+  }
+  return ownData;
+}
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}${product}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-  return (await response.json());
+export async function postApiData(data: any, url: any) {
+  // console.log(data);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
 }

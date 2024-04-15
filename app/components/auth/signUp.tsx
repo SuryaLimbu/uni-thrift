@@ -185,7 +185,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         placeholder="Enter your student ID"
         type="text"
         name="rollNo"
-        value={formData.studentId}
+        value={formData.rollNo}
         onChange={handleChange}
       />
           <Input
