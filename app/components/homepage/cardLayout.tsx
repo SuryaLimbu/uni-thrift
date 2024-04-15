@@ -4,19 +4,22 @@ import ItemCard from "../card";
 import fetchApiData from "@/app/lib/fetchData";
 
 interface ProductInterface {
-  title: string;
+  id:number;
+  name: string;
   price: number;
+  description: string;
 }
 
 export default function CardLayout() {
   const [products, setProduct] = useState<ProductInterface[]>([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       // console.log(response);
-      const data = fetchApiData("product");
-      console.log(data);
-      setProduct(await data);
+      const data: ProductInterface[] = await fetchApiData("product");
+      const latestData = data.slice(0, 8);
+      // console.log(data);
+      setProduct(latestData);
     };
     fetchData();
   }, []);
@@ -25,9 +28,17 @@ export default function CardLayout() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
+      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl py-2">
+        Latest Products
+      </h1>
+      <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
         {products.map((item) => (
-          <ItemCard title={item.title} price={item.price} />
+          <ItemCard
+            id={item.id}
+            title={item.name}
+            price={item.price}
+            description={item.description}
+          />
         ))}
       </div>
     </div>

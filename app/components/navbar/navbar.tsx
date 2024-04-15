@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { deleteCookie } from "cookies-next";
 import {
   Navbar,
@@ -24,13 +24,27 @@ import {
 import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import fetchApiData from "@/app/lib/fetchData";
 
 // import {AcmeLogo} from "./AcmeLogo.jsx";
-
+interface CategoryInterface {
+  id: number;
+  categoryName: string;
+}
 const NavbarUI = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [category, setCategory] = useState<CategoryInterface[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchApiData("category");
+      console.log("category:", data);
+      setCategory(data);
+    };
+    fetchData();
+  }, []);
 
   const menuItems = [
     "Profile",
@@ -62,8 +76,8 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-inherit" href="/">
-                UniExchangeMarket
+              <Link className="font-bold text-4xl text-inherit" href="/">
+                {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
             <div>
@@ -123,14 +137,7 @@ const NavbarUI = () => {
                   <DropdownItem key="team_settings">
                     <Link href="/dashboard">Dashboard</Link>
                   </DropdownItem>
-                  <DropdownItem key="analytics">Analytics</DropdownItem>
-                  <DropdownItem key="system">System</DropdownItem>
-                  <DropdownItem key="configurations">
-                    Configurations
-                  </DropdownItem>
-                  <DropdownItem key="help_and_feedback">
-                    Help & Feedback
-                  </DropdownItem>
+               
                   <DropdownItem key="logout" color="danger" onClick={logout}>
                     Log Out
                   </DropdownItem>
@@ -161,31 +168,13 @@ const NavbarUI = () => {
           </NavbarMenu>
           <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Book
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive>
-              <Link href="#" aria-current="page">
-                Electronic
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Clothing
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Furniture
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Stationary
-              </Link>
-            </NavbarItem>
+            {category.map((item) => (
+              <NavbarItem>
+                <Link color="foreground" href={`/site/productCollection/${item.id}`}>
+                  {item.categoryName}
+                </Link>
+              </NavbarItem>
+            ))}
           </NavbarContent>
         </div>
       </Navbar>
@@ -193,3 +182,6 @@ const NavbarUI = () => {
   );
 };
 export default NavbarUI;
+function userState(): [any, any] {
+  throw new Error("Function not implemented.");
+}
