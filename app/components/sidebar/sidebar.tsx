@@ -3,19 +3,27 @@ import React from "react";
 export default function Sidebar() {
   return (
     <>
-      <div className="flex h-screen flex-col justify-between border-e">
+      <div className="flex sm:h-screen flex-col  justify-between sm:border-e">
         <div className="px-4">
-          <ul className="mt-6 space-y-1">
+          <ul className="mt-6 space-y-1 flex sm:flex-col items-center sm:items-stretch gap-4">
             <li>
               <a
-                href="#"
+                href="/site/dashboard"
+                className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+              >
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a
+                href="/site/product"
                 className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
               >
                 Products
               </a>
             </li>
 
-            <li>
+            {/* <li>
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                   <span className="text-sm font-medium"> Products </span>
@@ -128,10 +136,9 @@ export default function Sidebar() {
                   </li>
                 </ul>
               </details>
-            </li>
+            </li> */}
           </ul>
         </div>
-
       </div>
     </>
   );

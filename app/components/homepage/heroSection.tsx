@@ -5,7 +5,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className=" grid grid-cols-2 items-center px-3 my-10">
+      <section className="grid sm:grid-cols-2 items-center px-3 my-10 gap-20">
         <div>
           <img src={(hero as HTMLImageElement).src} alt="Hero" className="" />
         </div>
@@ -15,7 +15,7 @@ export default function HeroSection() {
      
             <h1 className="text-3xl font-extrabold sm:text-4xl">
               Upgrade Your Uni Life
-              <strong className="font-extrabold text-red-700 sm:block">
+              <strong className="font-extrabold text-teal-700 sm:block py-2">
                 {" "}
                 Sell Your Second-Hand Stuff to Your Classmates!{" "}
               </strong>
@@ -27,7 +27,7 @@ export default function HeroSection() {
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button as={Link} color="primary" href="#">
+              <Button as={Link} color="primary" href="#" className="text-white">
                 Sell Now
               </Button>
             </div>

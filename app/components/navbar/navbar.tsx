@@ -46,18 +46,7 @@ const NavbarUI = () => {
     fetchData();
   }, []);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+  const menuItems = ["Profile", "Dashboard", "My Settings", "Log Out"];
 
   const logout = () => {
     deleteCookie("accessToken");
@@ -69,18 +58,18 @@ const NavbarUI = () => {
     <>
       <Navbar onMenuOpenChange={setIsMenuOpen} className="py-6">
         <div className="flex flex-col w-full gap-3  justify-between">
-          <div className="grid grid-cols-3 justify-between items-center w-full">
+          <div className="flex sm:grid sm:grid-cols-3 justify-between items-center w-full">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="sm:hidden"
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-4xl text-inherit" href="/">
+              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/">
                 {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
-            <div>
+            <div className="hidden sm:flex">
               <Input
                 classNames={{
                   base: "max-w-full h-10",
@@ -96,11 +85,12 @@ const NavbarUI = () => {
               />
             </div>
 
-            <div className="hidden lg:flex gap-6 justify-end">
+            <div className="lg:flex gap-6 justify-end">
               <Switch
                 defaultSelected
                 size="lg"
-                color="secondary"
+                color="primary"
+                className="hidden sm:flex"
                 thumbIcon={({ isSelected, className }) =>
                   isSelected ? (
                     <PiSun
@@ -122,7 +112,7 @@ const NavbarUI = () => {
                     isBordered
                     as="button"
                     className="transition-transform"
-                    color="secondary"
+                    color="primary"
                     name="Jason Hughes"
                     size="sm"
                     src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
@@ -137,7 +127,7 @@ const NavbarUI = () => {
                   <DropdownItem key="team_settings">
                     <Link href="/dashboard">Dashboard</Link>
                   </DropdownItem>
-               
+
                   <DropdownItem key="logout" color="danger" onClick={logout}>
                     Log Out
                   </DropdownItem>
@@ -147,30 +137,35 @@ const NavbarUI = () => {
           </div>
 
           <NavbarMenu>
-            {menuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
+            <NavbarMenuItem>
+              Profile
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link href="/site/productCollection">Latest Products</Link>
+       
+            </NavbarMenuItem>
+            <Divider className="my-4" />
+            <h1 className=" font-bold">Category</h1>
+            {category.map((item) => (
+              <NavbarMenuItem>
                 <Link
-                  color={
-                    index === 2
-                      ? "primary"
-                      : index === menuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                  }
-                  className="w-full"
-                  href="#"
-                  size="lg"
+                  color="foreground"
+                  href={`/site/productCollection/${item.id}`}
                 >
-                  {item}
+                  {item.categoryName}
                 </Link>
               </NavbarMenuItem>
             ))}
+            <Divider className="my-4" />
           </NavbarMenu>
           <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
             {category.map((item) => (
               <NavbarItem>
-                <Link color="foreground" href={`/site/productCollection/${item.id}`}>
+                <Link
+                  color="foreground"
+                  href={`/site/productCollection/${item.id}`}
+                >
                   {item.categoryName}
                 </Link>
               </NavbarItem>

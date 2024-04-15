@@ -9,7 +9,7 @@ export default function FeatureProduct() {
           <div className="grid place-content-center rounded bg-gray-100 p-6 sm:p-8">
             <div className="mx-auto max-w-md text-center lg:text-left">
               <header>
-                <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+                <h2 className="text-xl font-bold text-teal-900 sm:text-3xl">
                   Watches
                 </h2>
 
@@ -21,7 +21,7 @@ export default function FeatureProduct() {
 
               <a
                 href="#"
-                className="mt-8 inline-block rounded border border-gray-900 bg-gray-900 px-12 py-3 text-sm font-medium text-white transition hover:shadow focus:outline-none focus:ring"
+                className="mt-8 inline-block rounded-xl border  bg-primary px-12 py-3 text-sm font-medium text-white transition hover:shadow focus:outline-none focus:ring"
               >
                 Shop All
               </a>

@@ -8,12 +8,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="grid grid-cols-6">
+    <section className="grid sm:grid-cols-6">
       {/* Include shared UI here e.g. a header or sidebar */}
       <div>
       <Sidebar/>
       </div>
-     <div className=" col-span-5 p-6">
+     <div className=" sm:col-span-5 p-6">
      {children}
      </div>
      
