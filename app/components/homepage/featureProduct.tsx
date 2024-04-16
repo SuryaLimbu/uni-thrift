@@ -10,12 +10,12 @@ export default function FeatureProduct() {
             <div className="mx-auto max-w-md text-center lg:text-left">
               <header>
                 <h2 className="text-xl font-bold text-teal-900 sm:text-3xl">
-                  Watches
+                  Electronics
                 </h2>
 
                 <p className="mt-4 text-gray-500">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas
-                  rerum quam amet provident nulla error!
+                  Electrify Your World: Explore the Latest in Electronics
+                  Innovation!
                 </p>
               </header>
 
@@ -43,7 +43,7 @@ export default function FeatureProduct() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-teal-700">$150</p>
                   </div>
                 </a>
               </li>
@@ -61,7 +61,7 @@ export default function FeatureProduct() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-teal-700">$150</p>
                   </div>
                 </a>
               </li>

@@ -161,7 +161,7 @@ export default function Page() {
         {dangerAlert !== "" ? <DangerAlert msg={dangerAlert} /> : <></>}
 
         <div className=" ">
-          <Button onPress={onOpen} color="primary">
+          <Button onPress={onOpen} color="primary" className="text-white">
             Add New Product <PiPlus />
           </Button>
           <Modal
@@ -268,7 +268,7 @@ export default function Page() {
                         <Button color="danger" variant="flat" onPress={onClose}>
                           Close
                         </Button>
-                        <Button color="primary" type="submit" onPress={onClose}>
+                        <Button color="primary" type="submit" className="text-white" onPress={onClose}>
                           Save All Product Info
                         </Button>
                       </div>

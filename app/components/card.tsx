@@ -31,7 +31,7 @@ export default function ItemCard(product: ProductInterface) {
             </p>
           </div>
 
-          <p className="text-gray-900 font-semibold">£{price} </p>
+          <p className="text-teal-900 font-semibold">£{price} </p>
         </div>
       </a>
     </>
