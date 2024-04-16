@@ -19,7 +19,10 @@ export default function App() {
 
   return (
     <div className="flex flex-col  justify-between items-center ">
-      <div className="w-96 px-4">
+      <div className=" py-10">
+        <h1 className=" font-bold text-4xl text-teal-600">{process.env.NEXT_PUBLIC_SITE_TITLE}</h1>
+      </div>
+      <div className=" px-4">
         <Tabs
           fullWidth
           size="md"
@@ -37,7 +40,7 @@ export default function App() {
           <Tab key="sign-up" title="Sign up" className="flex justify-center">
             <Card className="max-w-full w-[340px] h-[600px]">
               <CardBody className="">
-                <SignUp setSelected={setSelected}/>
+                <SignUp setSelected={setSelected} />
               </CardBody>
             </Card>
           </Tab>

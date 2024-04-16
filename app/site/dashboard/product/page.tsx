@@ -57,7 +57,7 @@ export default function Page() {
     categoryId: "",
     postedBy: userId,
     contactDetails: "",
-    productImage: "",
+    productImageURL: "",
   });
 
   const [errors, setErrors] = useState({
@@ -66,7 +66,7 @@ export default function Page() {
     price: "",
     categoryId: "",
     contactDetails: "",
-    productImage: "",
+    productImageURL: "",
   });
   const validateForm = () => {
     const newErrors = {
@@ -86,11 +86,13 @@ export default function Page() {
       contactDetails:
         formData.contactDetails.trim() === ""
           ? "Contact details are required"
-          : formData.contactDetails.trim().length !== 10
-          ? "Contact number should be exactly 10 digits"
+          : formData.contactDetails.trim().length <= 5
+          ? "Contact number should be more than 5 characters"
           : "",
-      productImage:
-        formData.productImage.trim() === "" ? "Product image is required" : "",
+      productImageURL:
+        formData.productImageURL.trim() === ""
+          ? "Product image is required"
+          : "",
     };
 
     setErrors(newErrors);
@@ -106,7 +108,10 @@ export default function Page() {
       [name]: value,
     });
 
-    if (name === "productImage" && event.target instanceof HTMLInputElement) {
+    if (
+      name === "productImageURL" &&
+      event.target instanceof HTMLInputElement
+    ) {
       const files = event.target.files;
       if (files && files.length > 0) {
         const selectedFile = files[0];
@@ -117,7 +122,8 @@ export default function Page() {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isValid = validateForm();
+    // const isValid = validateForm();
+    const isValid= true;
     if (isValid) {
       try {
         const formDataWithFile = new FormData();
@@ -125,7 +131,7 @@ export default function Page() {
           formDataWithFile.append(key, value as string);
         });
         if (file) {
-          formDataWithFile.append("productImage", file); // Append the file to FormData
+          formDataWithFile.append("productImageURL", file); // Append the file to FormData
         }
         console.log("form data:", formData);
 
@@ -155,7 +161,7 @@ export default function Page() {
         {dangerAlert !== "" ? <DangerAlert msg={dangerAlert} /> : <></>}
 
         <div className=" ">
-          <Button onPress={onOpen} color="primary">
+          <Button onPress={onOpen} color="primary" className="text-white">
             Add New Product <PiPlus />
           </Button>
           <Modal
@@ -237,8 +243,8 @@ export default function Page() {
                       <div className="py-2">
                         <Input
                           isRequired
-                          label="Contact Number"
-                          placeholder="Enter your Contact Number"
+                          label="Contact Details"
+                          placeholder="Enter your Contact Number or Email"
                           variant="bordered"
                           value={formData.contactDetails}
                           onChange={handleInputChange}
@@ -253,7 +259,7 @@ export default function Page() {
                           type="file"
                           placeholder="Enter your Product Image"
                           variant="bordered"
-                          name="productImage"
+                          name="productImageURL"
                           accept="image/*"
                           onChange={handleInputChange}
                         />
@@ -262,7 +268,7 @@ export default function Page() {
                         <Button color="danger" variant="flat" onPress={onClose}>
                           Close
                         </Button>
-                        <Button color="primary" type="submit" onPress={onClose}>
+                        <Button color="primary" type="submit" className="text-white" onPress={onClose}>
                           Save All Product Info
                         </Button>
                       </div>
@@ -274,9 +280,7 @@ export default function Page() {
             </ModalContent>
           </Modal>
         </div>
-        <div>
-          {/* <List /> */}
-        </div>
+        <div>{/* <List /> */}</div>
       </div>
     </>
   );

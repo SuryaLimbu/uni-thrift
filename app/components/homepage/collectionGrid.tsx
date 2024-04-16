@@ -6,14 +6,15 @@ export default function CollectionGrid() {
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header className="text-center">
-            <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+            <h2 className="text-xl font-bold text-teal-900 sm:text-3xl">
               New Collection
             </h2>
 
             <p className="mx-auto mt-4 max-w-md text-gray-500">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-              praesentium cumque iure dicta incidunt est ipsam, officia dolor
-              fugit natus?
+            Introducing Our Newest Arrivals: Explore Fresh Finds and Exciting Additions to Our Collection!
+
+
+
             </p>
           </header>
 
@@ -23,7 +24,7 @@ export default function CollectionGrid() {
                 <img
                   src="https://images.unsplash.com/photo-1618898909019-010e4e234c55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   alt=""
-                  className="aspect-square w-full object-cover transition duration-500 group-hover:opacity-90"
+                  className="aspect-square w-full rounded-xl object-cover transition duration-500 group-hover:opacity-90"
                 />
 
                 <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
@@ -31,7 +32,7 @@ export default function CollectionGrid() {
                     Casual Trainers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>
@@ -51,7 +52,7 @@ export default function CollectionGrid() {
                     Winter Jumpers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>
@@ -71,7 +72,7 @@ export default function CollectionGrid() {
                     Skinny Jeans Blue
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>

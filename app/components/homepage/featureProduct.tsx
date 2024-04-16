@@ -9,19 +9,19 @@ export default function FeatureProduct() {
           <div className="grid place-content-center rounded bg-gray-100 p-6 sm:p-8">
             <div className="mx-auto max-w-md text-center lg:text-left">
               <header>
-                <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-                  Watches
+                <h2 className="text-xl font-bold text-teal-900 sm:text-3xl">
+                  Electronics
                 </h2>
 
                 <p className="mt-4 text-gray-500">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas
-                  rerum quam amet provident nulla error!
+                  Electrify Your World: Explore the Latest in Electronics
+                  Innovation!
                 </p>
               </header>
 
               <a
                 href="#"
-                className="mt-8 inline-block rounded border border-gray-900 bg-gray-900 px-12 py-3 text-sm font-medium text-white transition hover:shadow focus:outline-none focus:ring"
+                className="mt-8 inline-block rounded-xl border  bg-primary px-12 py-3 text-sm font-medium text-white transition hover:shadow focus:outline-none focus:ring"
               >
                 Shop All
               </a>
@@ -43,7 +43,7 @@ export default function FeatureProduct() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-teal-700">$150</p>
                   </div>
                 </a>
               </li>
@@ -61,7 +61,7 @@ export default function FeatureProduct() {
                       Simple Watch
                     </h3>
 
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
+                    <p className="mt-1 text-sm text-teal-700">$150</p>
                   </div>
                 </a>
               </li>

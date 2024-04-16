@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { deleteCookie } from "cookies-next";
+import React, { useEffect, useState } from "react";
+import { deleteCookie, getCookie } from "cookies-next";
 import {
   Navbar,
   NavbarBrand,
@@ -24,49 +24,53 @@ import {
 import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { fetchApiData } from "@/app/lib/fetchData";
+
 
 // import {AcmeLogo} from "./AcmeLogo.jsx";
-
+interface CategoryInterface {
+  id: number;
+  categoryName: string;
+}
 const NavbarUI = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [category, setCategory] = useState<CategoryInterface[]>([]);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchApiData("category");
+      console.log("category:", data);
+      setCategory(data);
+    };
+    fetchData();
+  }, []);
+
+  const menuItems = ["Profile", "Dashboard", "My Settings", "Log Out"];
 
   const logout = () => {
     deleteCookie("accessToken");
     deleteCookie("userId");
-    router.push("/");
+    router.push("/auth");
   };
 
   return (
     <>
       <Navbar onMenuOpenChange={setIsMenuOpen} className="py-6">
         <div className="flex flex-col w-full gap-3  justify-between">
-          <div className="grid grid-cols-3 justify-between items-center w-full">
+          <div className="flex sm:grid sm:grid-cols-3 justify-between items-center w-full">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="sm:hidden"
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-inherit" href="/">
-                UniExchangeMarket
+              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/site">
+                {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
-            <div>
+            <div className="hidden sm:flex">
               <Input
                 classNames={{
                   base: "max-w-full h-10",
@@ -82,11 +86,12 @@ const NavbarUI = () => {
               />
             </div>
 
-            <div className="hidden lg:flex gap-6 justify-end">
+            <div className="lg:flex gap-6 justify-end">
               <Switch
                 defaultSelected
                 size="lg"
-                color="secondary"
+                color="primary"
+                className="hidden sm:flex"
                 thumbIcon={({ isSelected, className }) =>
                   isSelected ? (
                     <PiSun
@@ -108,29 +113,22 @@ const NavbarUI = () => {
                     isBordered
                     as="button"
                     className="transition-transform"
-                    color="secondary"
+                    color="primary"
                     name="Jason Hughes"
                     size="sm"
-                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                   <DropdownItem key="profile" className="h-14 gap-2">
                     <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">zoey@example.com</p>
+                    <p className="font-semibold">{getCookie("email")}</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
                   <DropdownItem key="team_settings">
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/site/dashboard">Dashboard</Link>
                   </DropdownItem>
-                  <DropdownItem key="analytics">Analytics</DropdownItem>
-                  <DropdownItem key="system">System</DropdownItem>
-                  <DropdownItem key="configurations">
-                    Configurations
-                  </DropdownItem>
-                  <DropdownItem key="help_and_feedback">
-                    Help & Feedback
-                  </DropdownItem>
+
                   <DropdownItem key="logout" color="danger" onClick={logout}>
                     Log Out
                   </DropdownItem>
@@ -140,52 +138,39 @@ const NavbarUI = () => {
           </div>
 
           <NavbarMenu>
-            {menuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
+            <NavbarMenuItem>
+              Profile
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link href="/site/productCollection">Latest Products</Link>
+       
+            </NavbarMenuItem>
+            <Divider className="my-4" />
+            <h1 className=" font-bold">Category</h1>
+            {category.map((item) => (
+              <NavbarMenuItem>
                 <Link
-                  color={
-                    index === 2
-                      ? "primary"
-                      : index === menuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                  }
-                  className="w-full"
-                  href="#"
-                  size="lg"
+                  color="foreground"
+                  href={`/site/productCollection/${item.id}`}
                 >
-                  {item}
+                  {item.categoryName}
                 </Link>
               </NavbarMenuItem>
             ))}
+            <Divider className="my-4" />
           </NavbarMenu>
           <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Book
-              </Link>
-            </NavbarItem>
-            <NavbarItem isActive>
-              <Link href="#" aria-current="page">
-                Electronic
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Clothing
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Furniture
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Link color="foreground" href="#">
-                Stationary
-              </Link>
-            </NavbarItem>
+            {category.map((item) => (
+              <NavbarItem>
+                <Link
+                  color="foreground"
+                  href={`/site/productCollection/${item.id}`}
+                >
+                  {item.categoryName}
+                </Link>
+              </NavbarItem>
+            ))}
           </NavbarContent>
         </div>
       </Navbar>
@@ -193,3 +178,6 @@ const NavbarUI = () => {
   );
 };
 export default NavbarUI;
+function userState(): [any, any] {
+  throw new Error("Function not implemented.");
+}
