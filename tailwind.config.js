@@ -24,6 +24,15 @@ module.exports = {
             focus: "#BEF264",
           },
         },
+        dark: {
+          colors: {
+            primary: {
+              DEFAULT: "#0d9488",
+              foreground: "#000000",
+            },
+            focus: "#BEF264",
+          },
+        },
       },
     }),
   ],

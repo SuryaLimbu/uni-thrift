@@ -83,7 +83,7 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
 
     // If form is valid, proceed with submission
     if (formIsValid) {
-      console.log(formData);
+      // console.log(formData);
       const api = process.env.NEXT_PUBLIC_AUTH_API + "login";
       // console.log(api);
       try {
@@ -96,7 +96,7 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
 
           //store user data in cookies
 
