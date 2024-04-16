@@ -12,13 +12,28 @@ export async function fetchApiData(url: any) {
 
 export async function fetchOwnData(url: any) {
   const allData = await fetchApiData(url);
-  console.log("all data:", allData)
+  const userName = getCookie("userName");
+  // console.log("all data:", allData);
   const ownData = [];
   for (let i = 0; i < allData.length; i++) {
-    if (allData[i].userId === userId) {
+    if (allData[i].postedBy === userName) {
       ownData.push(allData[i]);
     }
   }
+  // console.log("own data:", ownData);
+  return ownData;
+}
+export async function fetchProductData(id: any) {
+  const allData = await fetchApiData("product");
+  // const userName = getCookie("userName");
+  // console.log("all data:", allData);
+  const ownData = [];
+  for (let i = 0; i < allData.length; i++) {
+    if (allData[i].id === id) {
+      ownData.push(allData[i]);
+    }
+  }
+  // console.log("own data:", ownData);
   return ownData;
 }
 
@@ -31,6 +46,34 @@ export async function postApiData(data: any, url: any) {
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(data),
+  });
+  return await response.json();
+}
+
+export async function postImageApiData(data: any, url: any) {
+  // console.log(data);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: data,
+  });
+  // Handle response
+  if (response.ok) {
+    // Form submitted successfully
+    console.log("Form submitted successfully");
+  } else {
+    // Handle error
+    console.error("Form submission failed");
+  }
+
+  return await response.json();
+}
+
+export async function getProductApiData( url: any) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
   return await response.json();
 }

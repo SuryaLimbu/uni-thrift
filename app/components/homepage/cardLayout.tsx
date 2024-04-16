@@ -5,10 +5,11 @@ import ItemCard from "../card";
 import { fetchApiData } from "@/app/lib/fetchData";
 
 interface ProductInterface {
-  id:number;
+  id:string;
   name: string;
-  price: number;
+  price: string;
   description: string;
+  productImageURL:string
 }
 
 export default function CardLayout() {
@@ -39,6 +40,7 @@ export default function CardLayout() {
             title={item.name}
             price={item.price}
             description={item.description}
+            productImageURL={item.productImageURL}
           />
         ))}
       </div>

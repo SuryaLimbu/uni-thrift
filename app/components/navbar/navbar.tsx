@@ -41,7 +41,7 @@ const NavbarUI = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData("category");
-      console.log("category:", data);
+      // console.log("category:", data);
       setCategory(data);
     };
     fetchData();

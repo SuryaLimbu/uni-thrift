@@ -3,19 +3,20 @@
 import React from "react";
 import { Card, CardBody, CardFooter, Image, Button } from "@nextui-org/react";
 interface ProductInterface {
-  id: number;
+  id: string;
   title: string;
-  price: number;
+  price: string;
   description: string;
+  productImageURL: string;
 }
 export default function ItemCard(product: ProductInterface) {
-  const { id, title, price, description } = product;
+  const { id, title, price, description, productImageURL } = product;
 
   return (
     <>
       <a href={`site/product/${id}`} className="group block">
         <img
-          src="https://images.unsplash.com/photo-1592921870789-04563d55041c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+          src={productImageURL}
           alt=""
           className="h-[350px] w-full object-cover sm:h-[450px] rounded-2xl"
         />
