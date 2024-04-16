@@ -24,16 +24,19 @@ export default function ProductCollection() {
   }, []);
   return (
     <section>
-      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 text-center">
         <header>
           <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
             Product Collection
           </h2>
 
-          <p className="mt-4 max-w-md text-gray-500">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-            praesentium cumque iure dicta incidunt est ipsam, officia dolor
-            fugit natus?
+          <p className="mt-4  text-gray-500">
+            Welcome to Our Exclusive Product Collection, where every item has
+            been meticulously chosen to bring you the best in quality,
+            functionality, and style. From cutting-edge electronics to must-have
+            gadgets, each product embodies innovation and excellence. Explore
+            our carefully curated selection and discover the perfect addition to
+            elevate your life.
           </p>
         </header>
 

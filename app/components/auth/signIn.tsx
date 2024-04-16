@@ -83,7 +83,7 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
 
     // If form is valid, proceed with submission
     if (formIsValid) {
-      console.log(formData);
+      // console.log(formData);
       const api = process.env.NEXT_PUBLIC_AUTH_API + "login";
       // console.log(api);
       try {
@@ -99,10 +99,11 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
           // console.log(data);
 
           //store user data in cookies
-       
 
           setCookie("accessToken", data.accessToken);
           setCookie("userId", data.userId);
+          setCookie("userName", data.userName);
+          setCookie("email", data.email);
           // Redirect user or update application state
           router.push("/site");
 

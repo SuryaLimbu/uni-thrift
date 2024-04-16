@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import {
   Navbar,
   NavbarBrand,
@@ -26,7 +26,6 @@ import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { fetchApiData } from "@/app/lib/fetchData";
 
-
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 interface CategoryInterface {
   id: number;
@@ -41,7 +40,7 @@ const NavbarUI = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchApiData("category");
-      console.log("category:", data);
+      // console.log("category:", data);
       setCategory(data);
     };
     fetchData();
@@ -66,7 +65,10 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/site">
+              <Link
+                className="font-bold text-4xl text-inherit text-teal-600"
+                href="/site"
+              >
                 {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
@@ -116,13 +118,13 @@ const NavbarUI = () => {
                     color="primary"
                     name="Jason Hughes"
                     size="sm"
-                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                   <DropdownItem key="profile" className="h-14 gap-2">
                     <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">zoey@example.com</p>
+                    <p className="font-semibold">{getCookie("email")}</p>
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
                   <DropdownItem key="team_settings">
@@ -138,17 +140,14 @@ const NavbarUI = () => {
           </div>
 
           <NavbarMenu>
-            <NavbarMenuItem>
-              Profile
-            </NavbarMenuItem>
+            <NavbarMenuItem>Profile</NavbarMenuItem>
             <NavbarMenuItem>
               <Link href="/site/productCollection">Latest Products</Link>
-       
             </NavbarMenuItem>
             <Divider className="my-4" />
             <h1 className=" font-bold">Category</h1>
-            {category.map((item) => (
-              <NavbarMenuItem>
+            {category.map((item, key) => (
+              <NavbarMenuItem key={key}>
                 <Link
                   color="foreground"
                   href={`/site/productCollection/${item.id}`}
@@ -161,8 +160,8 @@ const NavbarUI = () => {
           </NavbarMenu>
           <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
-            {category.map((item) => (
-              <NavbarItem>
+            {category.map((item, key) => (
+              <NavbarItem key={key}>
                 <Link
                   color="foreground"
                   href={`/site/productCollection/${item.id}`}

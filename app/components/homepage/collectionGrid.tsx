@@ -11,9 +11,10 @@ export default function CollectionGrid() {
             </h2>
 
             <p className="mx-auto mt-4 max-w-md text-gray-500">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-              praesentium cumque iure dicta incidunt est ipsam, officia dolor
-              fugit natus?
+            Introducing Our Newest Arrivals: Explore Fresh Finds and Exciting Additions to Our Collection!
+
+
+
             </p>
           </header>
 
@@ -71,7 +72,7 @@ export default function CollectionGrid() {
                     Skinny Jeans Blue
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>

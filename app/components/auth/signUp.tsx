@@ -113,10 +113,10 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
 
     const api = process.env.NEXT_PUBLIC_AUTH_API + "register";
-    console.log(api);
+    // console.log(api);
     try {
       const response = await fetch(api, {
         
@@ -127,10 +127,10 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         },
         body: JSON.stringify(formData),
       });
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         //store user data in cookies
 
