@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { PiSwap } from "react-icons/pi";
 import Link from "next/link";
-import fetchApiData from "@/app/lib/fetchData";
+import {fetchApiData} from "@/app/lib/fetchData";
 import ItemCard from "@/app/components/card";
 interface ProductInterface {
   id: number;
@@ -67,7 +67,8 @@ export default function Page() {
           </div>
 
           <div className="flex gap-2 justify-center">
-            <Button color="primary" size="lg" className="w-full">
+          {/* emailto:suryamankedem@gmail.com */}
+            <Button color="primary" size="lg" className="w-full text-white">
               Buy Now
             </Button>
 

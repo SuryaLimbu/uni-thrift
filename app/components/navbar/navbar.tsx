@@ -24,7 +24,8 @@ import {
 import { PiMagnifyingGlass, PiMoon, PiSun } from "react-icons/pi";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import fetchApiData from "@/app/lib/fetchData";
+import { fetchApiData } from "@/app/lib/fetchData";
+
 
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 interface CategoryInterface {

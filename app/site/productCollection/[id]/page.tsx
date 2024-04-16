@@ -1,14 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCollectionCard from "../card";
-import fetchApiData from "@/app/lib/fetchData";
+// import fetchApiData from "@/app/lib/fetchData";
+import { fetchApiData } from "@/app/lib/fetchData";
+
 import { useParams } from "next/navigation";
 
 interface ProductCollection {
   id: number;
   name: string;
   description: string;
-  image: string;
+  productImageURL: string;
   price: string;
   categoryId: string;
 }
@@ -111,7 +113,7 @@ export default function ProductCollection() {
                 name={item.name}
                 price={item.price}
                 description={""}
-                image={""}
+                productImageURL={item.productImageURL}
                 category={""}
               />
             </li>

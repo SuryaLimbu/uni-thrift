@@ -242,7 +242,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         </Link>
       </p>
       <div className="flex gap-2 justify-end">
-        <Button fullWidth color="primary" type="submit">
+        <Button fullWidth color="primary" type="submit" className="text-white">
           Sign up
         </Button>
       </div>

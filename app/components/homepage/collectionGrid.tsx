@@ -23,7 +23,7 @@ export default function CollectionGrid() {
                 <img
                   src="https://images.unsplash.com/photo-1618898909019-010e4e234c55?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   alt=""
-                  className="aspect-square w-full object-cover transition duration-500 group-hover:opacity-90"
+                  className="aspect-square w-full rounded-xl object-cover transition duration-500 group-hover:opacity-90"
                 />
 
                 <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
@@ -31,7 +31,7 @@ export default function CollectionGrid() {
                     Casual Trainers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>
@@ -51,7 +51,7 @@ export default function CollectionGrid() {
                     Winter Jumpers
                   </h3>
 
-                  <span className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
+                  <span className="mt-1.5 inline-block bg-teal-600 rounded-xl px-5 py-3 text-xs font-medium uppercase tracking-wide text-white">
                     Shop Now
                   </span>
                 </div>
