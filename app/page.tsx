@@ -1,23 +1,24 @@
 "use client";
 // `app/page.tsx` is the UI for the `/` URL
-import { useEffect, useState } from "react";
-import ItemCard from "./components/card";
-import CardLayout from "./components/homepage/cardLayout";
-import CollectionGrid from "./components/homepage/collectionGrid";
-import FeatureProduct from "./components/homepage/featureProduct";
-import HeroSection from "./components/homepage/heroSection";
-import NavbarUI from "./components/navbar/navbar";
-import Auth from "./auth/auth";
-import { redirect, useRouter } from "next/navigation";
+
+import { useEffect } from "react";
+// import { useRouter } from "next/router";
+// Import the useRouter hook from 'next/router' instead of 'next/navigation'
+import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 
-export default  function Page() {
- const router = useRouter();
-  return (
-    <>
-      {getCookie("userId") ? router.push("/site") : router.push("/auth")}
+export default function Page() {
+  const router = useRouter();
 
-      {/* // <HeroSection /> */}
-    </>
-  );
+  useEffect(() => {
+    const userId = getCookie("userId");
+
+    if (userId) {
+      router.push("/site");
+    } else {
+      router.push("/auth");
+    }
+  }, [router]); // Add router to the dependency array
+
+  return null; // You can return null here since the navigation happens inside useEffect
 }

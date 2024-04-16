@@ -32,7 +32,7 @@ export default function Page() {
     <div>
       <Breadcrumbs>
         <BreadcrumbItem>
-          <Link href="/">Home</Link>
+          <Link href="/site">Home</Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <Link href="">Products</Link>

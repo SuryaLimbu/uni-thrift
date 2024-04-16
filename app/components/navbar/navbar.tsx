@@ -52,7 +52,7 @@ const NavbarUI = () => {
   const logout = () => {
     deleteCookie("accessToken");
     deleteCookie("userId");
-    router.push("/");
+    router.push("/auth");
   };
 
   return (
@@ -66,7 +66,7 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/">
+              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/site">
                 {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
@@ -126,7 +126,7 @@ const NavbarUI = () => {
                   </DropdownItem>
                   <DropdownItem key="settings">My Settings</DropdownItem>
                   <DropdownItem key="team_settings">
-                    <Link href="/dashboard">Dashboard</Link>
+                    <Link href="/site/dashboard">Dashboard</Link>
                   </DropdownItem>
 
                   <DropdownItem key="logout" color="danger" onClick={logout}>

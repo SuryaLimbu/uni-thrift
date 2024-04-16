@@ -136,7 +136,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
 
         // Redirect user or update application state
 
-        router.push("/");
+        router.push("/auth");
 
         console.log("register successful");
       } else {
