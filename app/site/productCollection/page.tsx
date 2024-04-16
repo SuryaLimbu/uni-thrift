@@ -7,7 +7,7 @@ interface ProductCollection {
   id: number;
   name: string;
   description: string;
-  image: string;
+  productImageURL: string;
   price: string;
   category: string;
 }
@@ -100,7 +100,7 @@ export default function ProductCollection() {
                 name={item.name}
                 price={item.price}
                 description={""}
-                image={""}
+                productImageURL={""}
                 category={""}
               />
             </li>
