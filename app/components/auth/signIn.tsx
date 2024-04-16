@@ -96,13 +96,14 @@ const SignIn: React.FC<SignInProps> = ({ setSelected }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          // console.log(data);
+          console.log(data);
 
           //store user data in cookies
-       
 
           setCookie("accessToken", data.accessToken);
           setCookie("userId", data.userId);
+          setCookie("userName", data.userName);
+          setCookie("email", data.email);
           // Redirect user or update application state
           router.push("/site");
 
