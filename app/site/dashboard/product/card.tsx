@@ -91,6 +91,7 @@ export default function ItemCard(product: ProductInterface) {
 
       const res = await deleteApiData("product/" + id);
       if (res === true) {
+        router.refresh();
         console.log(`Deleting item with id ${id}`);
       }
     } else {
@@ -146,7 +147,7 @@ export default function ItemCard(product: ProductInterface) {
 
         <div className="mt-3 flex justify-between text-sm">
           <div>
-            <h3 className=" font-semibold text-gray-900 group-hover:underline group-hover:underline-offset-4">
+            <h3 className=" font-semibold text-teal-900 group-hover:underline group-hover:underline-offset-4">
               <Link href={`/site/product/${id}`}>{title}</Link>
             </h3>
 
@@ -160,7 +161,6 @@ export default function ItemCard(product: ProductInterface) {
         <div className="flex justify-between items-center py-2">
           <Button
             href={``}
-            color="primary"
             className="underline flex items-center hover:text-teal-600"
             onPress={onOpen}
           >
@@ -180,7 +180,7 @@ export default function ItemCard(product: ProductInterface) {
       </div>
 
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="full">
         <ModalContent>
           {(onClose) => (
             <>
@@ -273,7 +273,7 @@ export default function ItemCard(product: ProductInterface) {
                         /> */}
                     <img
                       src={formData.productImageURL}
-                      className="py-2 rounded-xl"
+                      className="py-2 rounded-xl w-60"
                     />
 
                     <input

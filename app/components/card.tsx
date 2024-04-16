@@ -23,7 +23,7 @@ export default function ItemCard(product: ProductInterface) {
 
         <div className="mt-3 flex justify-between text-sm">
           <div>
-            <h3 className=" font-semibold text-gray-900 group-hover:underline group-hover:underline-offset-4">
+            <h3 className=" font-semibold text-teal-900 group-hover:underline group-hover:underline-offset-4">
               {title}
             </h3>
 

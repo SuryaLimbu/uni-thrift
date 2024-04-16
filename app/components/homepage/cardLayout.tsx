@@ -30,7 +30,7 @@ export default function CardLayout() {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl py-2">
+      <h1 className="text-2xl font-bold text-teal-900 sm:text-3xl py-2">
         Latest Products
       </h1>
       <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">

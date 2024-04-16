@@ -262,7 +262,7 @@ export default function Page() {
         <hr />
         <div className="text-center">
           <header className=" flex  flex-col justify-center">
-            <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+            <h2 className="text-xl font-bold text-teal-900 sm:text-3xl">
               Product Collection
             </h2>
 
