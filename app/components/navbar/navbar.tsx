@@ -26,7 +26,6 @@ import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { fetchApiData } from "@/app/lib/fetchData";
 
-
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 interface CategoryInterface {
   id: number;
@@ -66,7 +65,10 @@ const NavbarUI = () => {
             />
             <div>
               {/* <AcmeLogo /> */}
-              <Link className="font-bold text-4xl text-inherit text-teal-600" href="/site">
+              <Link
+                className="font-bold text-4xl text-inherit text-teal-600"
+                href="/site"
+              >
                 {process.env.NEXT_PUBLIC_SITE_TITLE}
               </Link>
             </div>
@@ -138,17 +140,14 @@ const NavbarUI = () => {
           </div>
 
           <NavbarMenu>
-            <NavbarMenuItem>
-              Profile
-            </NavbarMenuItem>
+            <NavbarMenuItem>Profile</NavbarMenuItem>
             <NavbarMenuItem>
               <Link href="/site/productCollection">Latest Products</Link>
-       
             </NavbarMenuItem>
             <Divider className="my-4" />
             <h1 className=" font-bold">Category</h1>
-            {category.map((item) => (
-              <NavbarMenuItem>
+            {category.map((item, key) => (
+              <NavbarMenuItem key={key}>
                 <Link
                   color="foreground"
                   href={`/site/productCollection/${item.id}`}
@@ -161,8 +160,8 @@ const NavbarUI = () => {
           </NavbarMenu>
           <Divider className="hidden sm:flex" />
           <NavbarContent className="hidden sm:flex gap-10 " justify="center">
-            {category.map((item) => (
-              <NavbarItem>
+            {category.map((item, key) => (
+              <NavbarItem key={key}>
                 <Link
                   color="foreground"
                   href={`/site/productCollection/${item.id}`}

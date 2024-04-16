@@ -3,9 +3,9 @@ import { fetchApiData, fetchOwnData } from "@/app/lib/fetchData";
 import React, { useEffect, useState } from "react";
 import ItemCard from "./card";
 interface ProductInterface {
-  id: number;
+  id: string;
   name: string;
-  price: number;
+  price: string;
   description: string;
   productImageURL: string;
 }
@@ -22,8 +22,9 @@ export default function List() {
   return (
     <>
       <div className="grid sm:grid-cols-4 gap-4">
-        {data.map((item) => (
+        {data.map((item, key) => (
           <ItemCard
+            key={key}
             title={item.name}
             price={item.price}
             description={item.description}

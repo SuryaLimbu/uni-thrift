@@ -70,10 +70,42 @@ export async function postImageApiData(data: any, url: any) {
 
   return await response.json();
 }
+export async function putImageApiData(data: any, url: any) {
+  // console.log("from api PUT:", data.get("name"));
+  console.log("from api PUT:", url);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: data,
+  });
+  // Handle response
+  if (response.ok) {
+    // Form submitted successfully
+    console.log("Form submitted successfully");
+  } else {
+    // Handle error
+    console.error("Form submission failed");
+  }
 
-export async function getProductApiData( url: any) {
+  return await response.json();
+}
+
+export async function getProductApiData(url: any) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  return await response.json();
+}
+
+export async function deleteApiData(url: any) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}${url}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
   return await response.json();
 }

@@ -5,11 +5,11 @@ import ItemCard from "../card";
 import { fetchApiData } from "@/app/lib/fetchData";
 
 interface ProductInterface {
-  id:string;
+  id: string;
   name: string;
   price: string;
   description: string;
-  productImageURL:string
+  productImageURL: string;
 }
 
 export default function CardLayout() {
@@ -34,8 +34,9 @@ export default function CardLayout() {
         Latest Products
       </h1>
       <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
-        {products.map((item) => (
+        {products.map((item, key) => (
           <ItemCard
+            key={key}
             id={item.id}
             title={item.name}
             price={item.price}
