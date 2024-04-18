@@ -27,23 +27,34 @@ import {
   putImageApiData,
 } from "@/app/lib/fetchData";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 interface ProductInterface {
   id: string;
   title: string;
   price: string;
   description: string;
   productImageURL: string;
+  
 }
 interface CategoryInterface {
   id: number;
   categoryName: string;
 }
-export default function ItemCard(product: ProductInterface) {
+interface selectedProductInterface {
+  sendStateToParent: (dataFromChild: string) => void;
+}
+
+export default function ItemCard(
+  product: ProductInterface,
+  { sendStateToParent }: selectedProductInterface
+) {
   const { id, title, price, description, productImageURL } = product;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [category, setCategory] = useState<CategoryInterface[]>([]);
-  const [file, setFile] = useState<File | null>(null); // State to hold the selected file
+  const [file, setFile] = useState<File | null>(null);
+  const [data, setData] = useState<ProductInterface[]>([]); // State to hold the selected file
+  const [successAlert, setSuccessAlert] = useState("");
+  const [dangerAlert, setDangerAlert] = useState("");
 
   var userId = getCookie("userId");
   // console.log(userId);
@@ -91,14 +102,22 @@ export default function ItemCard(product: ProductInterface) {
 
       const res = await deleteApiData("product/" + id);
       if (res === true) {
-        router.refresh();
-        console.log(`Deleting item with id ${id}`);
+        // router.refresh();
+        // router.replace("/site/dashboard/product");
+        const value = "Delete Selected Product successfully";
+        setDangerAlert(value);
+        sendStateToParent(value);
+        // redirect('/site/dashboard/product');
+        // router.push("/product");
+        
+        // console.log(`Deleting item with id ${id}`);
       }
     } else {
       // Handle cancellation
       console.log("Deletion cancelled");
     }
   }
+  console.log("send state to parent:", sendStateToParent);
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // console.log("handle image", e.target.files[0]);
