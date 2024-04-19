@@ -1,7 +1,37 @@
 "use client";
+import { fetchApiData } from "@/app/lib/fetchData";
 import { useState, useEffect } from "react";
 
+interface ProductInterface {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  productImageURL: string;
+}
 export default function FeatureProduct() {
+  const [products, setProduct] = useState<ProductInterface[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      // console.log(response);
+      const data: ProductInterface[] = await fetchApiData("product");
+      // Shuffle the array of products
+      const shuffledData = shuffleArray(data);
+      // Take the first two items
+      const randomProducts = shuffledData.slice(0, 2);
+      setProduct(randomProducts);
+    };
+    fetchData();
+  }, []);
+
+  // Function to shuffle array
+  const shuffleArray = (array: any[]) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
   return (
     <section>
       <div className="">
@@ -20,7 +50,7 @@ export default function FeatureProduct() {
               </header>
 
               <a
-                href="#"
+                href="/site/productCollection"
                 className="mt-8 inline-block rounded-xl border  bg-primary px-12 py-3 text-sm font-medium text-white transition hover:shadow focus:outline-none focus:ring"
               >
                 Shop All
@@ -30,41 +60,47 @@ export default function FeatureProduct() {
 
           <div className="lg:col-span-2 lg:py-8">
             <ul className="grid grid-cols-2 gap-4">
-              <li>
+              {products.map((product) => (
+                <li>
+                  <a href="#" className="group block">
+                    <img
+                      src={product.productImageURL}
+                      alt=""
+                      className="aspect-square w-full rounded object-cover"
+                    />
+
+                    <div className="mt-3">
+                      <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
+                        {product.name}
+                      </h3>
+
+                      <p className="mt-1 text-sm text-teal-700">
+                      £{product.price}
+                      </p>
+                    </div>
+                  </a>
+                </li>
+              ))}
+
+              {/* <li>
                 <a href="#" className="group block">
                   <img
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
+                    src={products[1].productImageURL}
                     alt=""
                     className="aspect-square w-full rounded object-cover"
                   />
 
                   <div className="mt-3">
                     <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                      Simple Watch
+                      {products[1].name}
                     </h3>
 
-                    <p className="mt-1 text-sm text-teal-700">$150</p>
+                    <p className="mt-1 text-sm text-teal-700">
+                      ${products[1].price}
+                    </p>
                   </div>
                 </a>
-              </li>
-
-              <li>
-                <a href="#" className="group block">
-                  <img
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    alt=""
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-3">
-                    <h3 className="font-medium text-gray-900 group-hover:underline group-hover:underline-offset-4">
-                      Simple Watch
-                    </h3>
-
-                    <p className="mt-1 text-sm text-teal-700">$150</p>
-                  </div>
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

@@ -30,6 +30,7 @@ import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import List from "./list";
 import ItemCard from "./card";
+import SkeletonCard from "@/app/components/skeleton";
 interface CategoryInterface {
   id: number;
   categoryName: string;
@@ -60,6 +61,7 @@ export default function Page() {
 
   const [data, setData] = useState<ProductInterface[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   var userId = getCookie("userId");
   // console.log(userId);
@@ -114,7 +116,8 @@ export default function Page() {
   const fetchOwnAPIData = async () => {
     const data: ProductInterface[] = await fetchOwnData("product");
     setData(data);
-    console.log(data);
+    // console.log(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -371,18 +374,23 @@ export default function Page() {
           </div>
 
           <div className="grid sm:grid-cols-4 gap-4">
-            {data.map((item, key) => (
-              <ItemCard
-                key={key}
-                title={item.name}
-                price={item.price}
-                description={item.description}
-                id={item.id}
-                productImageURL={item.productImageURL}
-                // onHandleChange={parentHandleChange}
-                onDeletionSuccess={handleDeleteItem}
-              />
-            ))}
+            {loading
+              ? // Display skeleton cards while loading
+                Array.from({ length: 8 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))
+              : data.map((item, key) => (
+                  <ItemCard
+                    key={key}
+                    title={item.name}
+                    price={item.price}
+                    description={item.description}
+                    id={item.id}
+                    productImageURL={item.productImageURL}
+                    // onHandleChange={parentHandleChange}
+                    onDeletionSuccess={handleDeleteItem}
+                  />
+                ))}
           </div>
         </div>
       </div>

@@ -282,7 +282,7 @@ export default function ItemCard({
                       type="text"
                     />
                   </div>
-                  <div className="py-2">
+                  <div className="py-2 grid sm:grid-cols-2 gap-4">
                     {/* <Input
                           // key={formData.productImage} // Add key prop
                           isRequired
@@ -295,30 +295,36 @@ export default function ItemCard({
                           
                           onChange={handleInputChange}
                         /> */}
-                    <img
-                      src={formData.productImageURL}
-                      className="py-2 rounded-xl w-60"
-                    />
-
-                    <input
-                      type="file"
-                      name="productImage"
-                      placeholder="Enter your Product Image"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                  <div className="flex gap-4 justify-center">
-                    <Button color="danger" variant="flat" onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button
-                      color="primary"
-                      type="submit"
-                      className="text-white"
-                      onPress={onClose}
-                    >
-                      Save All Product Info
-                    </Button>
+                    <div className="flex justify-center">
+                      <img
+                        src={formData.productImageURL}
+                        className="py-2 rounded-xl w-60 h-60"
+                      />
+                    </div>
+                    <div className="grid gap-4 justify-center">
+                      <div className="">
+                        {" "}
+                        <input
+                          type="file"
+                          name="productImage"
+                          placeholder="Enter your Product Image"
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                      <div className="flex gap-4 justify-center">
+                        <Button color="danger" variant="flat" onPress={onClose}>
+                          Close
+                        </Button>
+                        <Button
+                          color="primary"
+                          type="submit"
+                          className="text-white"
+                          onPress={onClose}
+                        >
+                          Save All Product Info
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </ModalBody>
