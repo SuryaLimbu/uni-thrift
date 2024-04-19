@@ -27,7 +27,7 @@ import {
   putImageApiData,
 } from "@/app/lib/fetchData";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 interface ProductInterface {
   id: string;
   title: string;
@@ -39,11 +39,25 @@ interface CategoryInterface {
   id: number;
   categoryName: string;
 }
-export default function ItemCard(product: ProductInterface) {
-  const { id, title, price, description, productImageURL } = product;
+interface SubComponentProps extends ProductInterface {
+  onDeletionSuccess: () => void;
+}
+
+export default function ItemCard({
+  id,
+  title,
+  price,
+  description,
+  productImageURL,
+  onDeletionSuccess,
+}: SubComponentProps) {
+  // const { id, title, price, description, productImageURL } = product;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [category, setCategory] = useState<CategoryInterface[]>([]);
-  const [file, setFile] = useState<File | null>(null); // State to hold the selected file
+  const [file, setFile] = useState<File | null>(null);
+  const [data, setData] = useState<ProductInterface[]>([]); // State to hold the selected file
+  const [successAlert, setSuccessAlert] = useState("");
+  const [dangerAlert, setDangerAlert] = useState("");
 
   var userId = getCookie("userId");
   // console.log(userId);
@@ -90,15 +104,25 @@ export default function ItemCard(product: ProductInterface) {
       // Perform the deletion logic here
 
       const res = await deleteApiData("product/" + id);
+      console.log("res data:", res);
       if (res === true) {
-        router.refresh();
-        console.log(`Deleting item with id ${id}`);
+        // router.refresh();
+        // router.replace("/site/dashboard/product");
+        // const value = "Delete Selected Product successfully";
+        // setDangerAlert(value);
+        // sendStateToParent(value);
+        // redirect('/site/dashboard/product');
+        console.log("product delete:", res);
+        onDeletionSuccess();
+
+        // console.log(`Deleting item with id ${id}`);
       }
     } else {
       // Handle cancellation
       console.log("Deletion cancelled");
     }
   }
+  // console.log("send state to parent:", sendStateToParent);
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // console.log("handle image", e.target.files[0]);
@@ -161,7 +185,7 @@ export default function ItemCard(product: ProductInterface) {
         <div className="flex justify-between items-center py-2">
           <Button
             href={``}
-            className="underline flex items-center hover:text-teal-600"
+            className="underline flex items-center light:bg-white dark:bg-black hover:text-teal-600"
             onPress={onOpen}
           >
             <PiNotePencil className=" pr-2 w-6 h-6" />
@@ -258,7 +282,7 @@ export default function ItemCard(product: ProductInterface) {
                       type="text"
                     />
                   </div>
-                  <div className="py-2">
+                  <div className="py-2 grid sm:grid-cols-2 gap-4">
                     {/* <Input
                           // key={formData.productImage} // Add key prop
                           isRequired
@@ -271,30 +295,36 @@ export default function ItemCard(product: ProductInterface) {
                           
                           onChange={handleInputChange}
                         /> */}
-                    <img
-                      src={formData.productImageURL}
-                      className="py-2 rounded-xl w-60"
-                    />
-
-                    <input
-                      type="file"
-                      name="productImage"
-                      placeholder="Enter your Product Image"
-                      onChange={handleFileChange}
-                    />
-                  </div>
-                  <div className="flex gap-4 justify-center">
-                    <Button color="danger" variant="flat" onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button
-                      color="primary"
-                      type="submit"
-                      className="text-white"
-                      onPress={onClose}
-                    >
-                      Save All Product Info
-                    </Button>
+                    <div className="flex justify-center">
+                      <img
+                        src={formData.productImageURL}
+                        className="py-2 rounded-xl w-60 h-60"
+                      />
+                    </div>
+                    <div className="grid gap-4 justify-center">
+                      <div className="">
+                        {" "}
+                        <input
+                          type="file"
+                          name="productImage"
+                          placeholder="Enter your Product Image"
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                      <div className="flex gap-4 justify-center">
+                        <Button color="danger" variant="flat" onPress={onClose}>
+                          Close
+                        </Button>
+                        <Button
+                          color="primary"
+                          type="submit"
+                          className="text-white"
+                          onPress={onClose}
+                        >
+                          Save All Product Info
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </form>
               </ModalBody>

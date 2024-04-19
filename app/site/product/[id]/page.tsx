@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Button, BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
 import { PiSwap } from "react-icons/pi";
 import Link from "next/link";
+import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+
 import {
   fetchApiData,
   fetchProductData,
@@ -27,11 +29,34 @@ export default function Page() {
   const [products, setProduct] = useState<ProductInterface[]>([]);
 
   const [data, setData] = useState<ProductInterface>();
+  const [randomCode, setRandomCode] = useState<string>("");
+
+  // Function to generate random code
+  const generateRandomCode = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const codeLength = 8;
+    let result = "";
+    for (let i = 0; i < codeLength; i++) {
+      result += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return result;
+  };
+
+  // Function to handle code generation and confirmation
+  const handleGenerateCode = () => {
+    const code = generateRandomCode();
+    setRandomCode(code);
+    // Display confirmation
+    // alert(`Random code generated: ${code}. Confirmation sent.`); 
+  };
   // console.log(data[0]);
 
   useEffect(() => {
     const productData = async () => {
-      const url = "product/"+id ;
+      const url = "product/" + id;
       // console.log("url:",url);
       const response: ProductInterface = await getProductApiData(url);
       // console.log("response data: ", response);
@@ -80,7 +105,7 @@ export default function Page() {
             <h1 className=" font-bold text-4xl">{data?.name}</h1>
             <p className=" font-medium text-teal-600">£{data?.price} GBP</p>
             <p className=" font-medium">
-              Posted by:{''}
+              Posted by:{""}
               <Link href={``} className="underline">
                 {data?.postedBy}
               </Link>
@@ -89,22 +114,49 @@ export default function Page() {
 
           <div className="flex gap-2 justify-center">
             {/* emailto:suryamankedem@gmail.com */}
-            <Button color="primary" size="lg" className="w-full text-white">
-              Buy Now
-            </Button>
+            <Popover placement="top" showArrow={true}>
+              <PopoverTrigger>
+                <Button color="primary" size="lg" className="w-full text-white">
+                  Buy Now
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px]">
+                <div className="px-1 py-2">
+                  <div className="text-small font-bold">Contact Details</div>
+                  <div className="text-tiny">{data?.contactDetails}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
 
-            <Button color="primary" variant="bordered" size="lg">
-              Give
-            </Button>
+            <Popover placement="top" showArrow={true}>
+              <PopoverTrigger>
+                <Button
+                  color="primary"
+                  size="lg"
+                  className="w-full text-white"
+                  onClick={handleGenerateCode}
+                >
+                  Give Now
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px]">
+                <div className="px-1 py-2">
+                  <div className="text-small font-bold">Share code</div>
+                  <div className="text-tiny">{randomCode}</div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
       </div>
       <div className="py-10">
-        <div><p>{data?.description}</p></div>
+        <div>
+          <p>{data?.description}</p>
+        </div>
       </div>
 
       <div>
-        <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
+        <div className="gap-3 grid grid-cols-2 sm:grid-cols-4 py-20">
           {products.map((item) => (
             <ItemCard
               id={item.id}

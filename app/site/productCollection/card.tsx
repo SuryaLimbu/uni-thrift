@@ -14,7 +14,7 @@ export default function ProductCollectionCard(product: ProductCollection) {
       <img
         src={productImageURL}
         alt=""
-        className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+        className="h-[350px] w-full object-cover rounded-xl transition duration-500 group-hover:scale-105 sm:h-[450px]"
       />
 
       <div className="relative bg-white pt-3">
