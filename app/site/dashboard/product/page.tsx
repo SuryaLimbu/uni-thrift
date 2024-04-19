@@ -20,6 +20,7 @@ import ProductTable from "./list";
 import { PiCross, PiPlus, PiX, PiXCircle } from "react-icons/pi";
 import {
   fetchApiData,
+  fetchOwnData,
   postApiData,
   postImageApiData,
 } from "@/app/lib/fetchData";
@@ -28,6 +29,8 @@ import DangerAlert from "@/app/components/alert/fail";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import List from "./list";
+import ItemCard from "./card";
+import SkeletonCard from "@/app/components/skeleton";
 interface CategoryInterface {
   id: number;
   categoryName: string;
@@ -41,15 +44,36 @@ interface CategoryInterface {
 //   contactDetails: string;
 //   productImage: string;
 // }
+interface ProductInterface {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  productImageURL: string;
+}
+
 export default function Page() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [successAlert, setSuccessAlert] = useState("");
   const [dangerAlert, setDangerAlert] = useState("");
   const [category, setCategory] = useState<CategoryInterface[]>([]);
-  const [file, setFile] = useState<File|null>(null); // State to hold the selected file
+  const [file, setFile] = useState<File | null>(null); // State to hold the selected file
+
+  const [data, setData] = useState<ProductInterface[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   var userId = getCookie("userId");
   // console.log(userId);
+  // const parentHandleChange = () => {
+  //   alert("sss");
+  // };
+  const handleDeleteItem = () => {
+    console.log("handleDeleteItem");
+    setDangerAlert("Successfully deleted!");
+    setRefresh(!refresh);
+    fetchOwnAPIData();
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,7 +82,7 @@ export default function Page() {
     postedBy: userId || "",
     categoryId: "",
     contactDetails: "",
-    productImage: file ||"",
+    productImage: file || null,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,15 +97,28 @@ export default function Page() {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      const file = e.target.files[0];
       console.log("handle image", e.target.files[0]);
-      setFile(e.target.files[0]);
+      if (file !== null) {
+        // setFile(e.target.files[0]);
+        setFormData({
+          ...formData,
+          productImage: file,
+        });
+      }
     }
-    // console.log("file:",file);
+    console.log("file:", file);
   };
 
   // console.log("successAler: ", successAlert);
   // console.log("categoryAler: ", category);
   const router = useRouter();
+  const fetchOwnAPIData = async () => {
+    const data: ProductInterface[] = await fetchOwnData("product");
+    setData(data);
+    // console.log(data);
+    setLoading(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,12 +128,14 @@ export default function Page() {
       setCategory(await data);
     };
     fetchData();
+
+    fetchOwnAPIData();
   }, []);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("onSubmit:", formData.name);
+    console.log("onSubmit:", formData);
 
     const newFormData = new FormData();
 
@@ -106,23 +145,27 @@ export default function Page() {
     newFormData.append("postedBy", formData.postedBy);
     newFormData.append("categoryId", formData.categoryId);
     newFormData.append("contactDetails", formData.contactDetails);
-    newFormData.append("productImage", formData.productImage);
+    // Check if productImage is not null before appending
+    if (formData.productImage !== null) {
+      newFormData.append("productImage", formData.productImage);
+    } else {
+      // Handle the case where productImage is null, perhaps set a default image or something
+    }
 
     console.log("onSubmit:", newFormData.get("productImage"));
     try {
       const response = await postImageApiData(newFormData, "product");
 
-      // console.log(response.data);
+      console.log(response.data);
       // Display success message and close form
-      router.push("/site/dashboard/product");
+      setSuccessAlert("Product add successfully");
+      // router.replace("/site/dashboard/product");
+      fetchOwnAPIData();
     } catch (error) {
       console.error(error);
       // Display error message
     }
   };
-
-  
- 
 
   return (
     <>
@@ -330,7 +373,25 @@ export default function Page() {
             </div>
           </div>
 
-          <List />
+          <div className="grid sm:grid-cols-4 gap-4">
+            {loading
+              ? // Display skeleton cards while loading
+                Array.from({ length: 8 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+                ))
+              : data.map((item, key) => (
+                  <ItemCard
+                    key={key}
+                    title={item.name}
+                    price={item.price}
+                    description={item.description}
+                    id={item.id}
+                    productImageURL={item.productImageURL}
+                    // onHandleChange={parentHandleChange}
+                    onDeletionSuccess={handleDeleteItem}
+                  />
+                ))}
+          </div>
         </div>
       </div>
     </>

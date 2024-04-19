@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ProductCollectionCard from "./card";
 import { fetchApiData } from "@/app/lib/fetchData";
+import SkeletonCard from "@/app/components/skeleton";
 
 interface ProductCollection {
   id: number;
@@ -15,10 +16,13 @@ export default function ProductCollection() {
   const [productCollection, setProductCollection] = useState<
     ProductCollection[]
   >([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const productCollection = async () => {
       const data: ProductCollection[] = await fetchApiData("product");
       setProductCollection(data);
+      setLoading(false);
     };
     productCollection();
   }, []);
@@ -96,18 +100,24 @@ export default function ProductCollection() {
         </div>
 
         <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {productCollection.map((item) => (
-            <li>
-              <ProductCollectionCard
-                id={item.id}
-                name={item.name}
-                price={item.price}
-                description={""}
-                productImageURL={""}
-                category={""}
-              />
-            </li>
-          ))}
+          {loading
+            ? // Display skeleton cards while loading
+              Array.from({ length: 8 }).map((_, index) => (
+                <SkeletonCard key={index} />
+              ))
+            : productCollection.map((item, key) => (
+                <li>
+                  <ProductCollectionCard
+                    key={key}
+                    id={item.id}
+                    name={item.name}
+                    price={item.price}
+                    description={""}
+                    productImageURL={item.productImageURL}
+                    category={""}
+                  />
+                </li>
+              ))}
         </ul>
       </div>
     </section>
