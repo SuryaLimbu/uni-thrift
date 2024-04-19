@@ -13,7 +13,7 @@ interface ProductInterface {
   productImageURL: string;
 }
 
-export default async function CardLayout() {
+export default  function CardLayout() {
   const [products, setProduct] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
