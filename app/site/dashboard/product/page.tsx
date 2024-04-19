@@ -49,8 +49,8 @@ interface ProductInterface {
   price: string;
   description: string;
   productImageURL: string;
-  sendStateToChild: (dataFromChild: string) => void;
 }
+
 export default function Page() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [successAlert, setSuccessAlert] = useState("");
@@ -59,13 +59,17 @@ export default function Page() {
   const [file, setFile] = useState<File | null>(null); // State to hold the selected file
 
   const [data, setData] = useState<ProductInterface[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   var userId = getCookie("userId");
   // console.log(userId);
-
-  const receiveDeleteState = async (dataFromChild: string) => {
-    console.log(dataFromChild);
-    setDangerAlert(dataFromChild);
+  // const parentHandleChange = () => {
+  //   alert("sss");
+  // };
+  const handleDeleteItem = () => {
+    console.log("handleDeleteItem");
+    setDangerAlert("Successfully deleted!");
+    setRefresh(!refresh);
     fetchOwnAPIData();
   };
 
@@ -110,6 +114,7 @@ export default function Page() {
   const fetchOwnAPIData = async () => {
     const data: ProductInterface[] = await fetchOwnData("product");
     setData(data);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -281,7 +286,7 @@ export default function Page() {
                           color="primary"
                           type="submit"
                           className="text-white"
-                          // onPress={onClose}
+                          onPress={onClose}
                         >
                           Save All Product Info
                         </Button>
@@ -374,7 +379,8 @@ export default function Page() {
                 description={item.description}
                 id={item.id}
                 productImageURL={item.productImageURL}
-                
+                // onHandleChange={parentHandleChange}
+                onDeletionSuccess={handleDeleteItem}
               />
             ))}
           </div>

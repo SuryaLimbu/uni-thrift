@@ -34,21 +34,24 @@ interface ProductInterface {
   price: string;
   description: string;
   productImageURL: string;
-  
 }
 interface CategoryInterface {
   id: number;
   categoryName: string;
 }
-interface selectedProductInterface {
-  sendStateToParent: (dataFromChild: string) => void;
+interface SubComponentProps extends ProductInterface {
+  onDeletionSuccess: () => void;
 }
 
-export default function ItemCard(
-  product: ProductInterface,
-  { sendStateToParent }: selectedProductInterface
-) {
-  const { id, title, price, description, productImageURL } = product;
+export default function ItemCard({
+  id,
+  title,
+  price,
+  description,
+  productImageURL,
+  onDeletionSuccess,
+}: SubComponentProps) {
+  // const { id, title, price, description, productImageURL } = product;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [category, setCategory] = useState<CategoryInterface[]>([]);
   const [file, setFile] = useState<File | null>(null);
@@ -101,15 +104,17 @@ export default function ItemCard(
       // Perform the deletion logic here
 
       const res = await deleteApiData("product/" + id);
+      console.log("res data:", res);
       if (res === true) {
         // router.refresh();
         // router.replace("/site/dashboard/product");
-        const value = "Delete Selected Product successfully";
-        setDangerAlert(value);
-        sendStateToParent(value);
+        // const value = "Delete Selected Product successfully";
+        // setDangerAlert(value);
+        // sendStateToParent(value);
         // redirect('/site/dashboard/product');
-        // router.push("/product");
-        
+        console.log("product delete:", res);
+        onDeletionSuccess();
+
         // console.log(`Deleting item with id ${id}`);
       }
     } else {
@@ -117,7 +122,7 @@ export default function ItemCard(
       console.log("Deletion cancelled");
     }
   }
-  console.log("send state to parent:", sendStateToParent);
+  // console.log("send state to parent:", sendStateToParent);
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       // console.log("handle image", e.target.files[0]);
@@ -180,7 +185,7 @@ export default function ItemCard(
         <div className="flex justify-between items-center py-2">
           <Button
             href={``}
-            className="underline flex items-center hover:text-teal-600"
+            className="underline flex items-center light:bg-white dark:bg-black hover:text-teal-600"
             onPress={onOpen}
           >
             <PiNotePencil className=" pr-2 w-6 h-6" />
