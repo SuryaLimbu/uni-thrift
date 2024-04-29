@@ -7,14 +7,13 @@ interface SignUpProps {
 }
 
 const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
-
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     rollNo: "",
-    school:"",
+    school: "",
     phone: "",
     password: "",
     confirmPassword: "",
@@ -24,8 +23,8 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
     lastName: "",
     email: "",
     rollNo: "",
-    school:"",
-    phone:"",
+    school: "",
+    phone: "",
     password: {
       required: "",
       length: "",
@@ -113,15 +112,16 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(formData);
+    console.log("data from form:", formData);
+
+    // alert("login successfull");
 
     const api = process.env.NEXT_PUBLIC_AUTH_API + "register";
     // console.log(api);
     try {
       const response = await fetch(api, {
-        
         method: "POST",
-        
+
         headers: {
           "Content-Type": "application/json",
         },
@@ -130,23 +130,26 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
       // console.log(response);
       if (response.ok) {
         const data = await response.json();
+        setSelected("login");
+        alert("login successfull");
         // console.log(data);
 
         //store user data in cookies
 
         // Redirect user or update application state
 
-        router.push("/auth");
+        // router.push("/auth");
 
-        console.log("register successful");
+        // console.log("register successful");
       } else {
         // Handle login failure, display error message
+        alert("login failed");
+        setSelected("sign-up");
         console.error("register failed");
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      // console.error("An error occurred:", error);
     }
-    
   };
 
   return (
@@ -188,7 +191,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         value={formData.rollNo}
         onChange={handleChange}
       />
-          <Input
+      <Input
         isRequired
         label="University Name"
         placeholder="Enter your university name"
@@ -197,7 +200,7 @@ const SignUp: React.FC<SignUpProps> = ({ setSelected }) => {
         value={formData.school}
         onChange={handleChange}
       />
-          <Input
+      <Input
         isRequired
         label="Phone Number"
         placeholder="Enter your phone number"
